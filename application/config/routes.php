@@ -62,5 +62,6 @@ $route['pos-admin-update'] = 'pos/admin_api/update';
 $route['pos-product-find'] = 'pos/product/find';
 $route['pos-product-order'] = 'pos/product/order';
 $route['find-product-by-location'] = 'pos/product_api/find_by_location';
+$route['check-product-stock'] = 'pos/product_api/check_stock';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
