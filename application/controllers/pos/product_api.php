@@ -39,9 +39,41 @@ class Product_Api extends CI_Controller {
         }
 
     }
-    public function index()
+    public function check_stock()
 	{
+        $ret['success'] = 0;
+        $ret['message'] = 'System Error!';
+        $ret['data'] = null;
+		
+        $prod_id = $this->input->post('prod_id', TRUE);        
+        $prod_quantity = $this->input->post('prod_quantity', TRUE);        
 
+		$where['tbl_product.intID'] = $prod_id;
+		$this->load->model('Product_model');
+		$bol = false;
+		$Product_model = $this->Product_model->find_by($where);		
+		if(isset($Product_model)||$Product_model!=null){
+			if(count($Product_model->result())>0){
+                foreach($Product_model->result() as $row){
+                    if($row->prod_quantity>$prod_quantity){
+                        $bol=true;
+                    }
+                }
+				$ret['success'] = 1;
+				$ret['message'] = 'Found!';
+				$ret['data'] = $bol;				
+			} else {
+				$ret['success'] = 0;
+				$ret['message'] = 'No data!';
+				$ret['data'] = null;			
+			}
+		
+		} else {
+			$ret['success'] = 0;
+			$ret['message'] = 'No data!';
+			$ret['data'] = null;		
+		}
+        echo json_encode($ret);
 	}
         
     public function find_by_location()
